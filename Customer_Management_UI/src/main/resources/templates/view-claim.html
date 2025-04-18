@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Claims</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            margin: 0;
+            flex: 1;
+            text-align: center;
+        }
+        .navbar a {
+            background-color: white;
+            color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .form-section {
+            width: 60%;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px; /* Added space below the input */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            margin-top: 10px; /* Added space above the button */
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            text-align: center;
+        }
+		.claim-details {
+		           margin-top: 20px;
+		           padding: 20px;
+		           background-color: #f9f9f9;
+		           border: 1px solid #ddd;
+		           border-radius: 5px;
+		           text-align: left;
+		           display: none; /* Initially hidden */
+		       }
+		       .claim-details p {
+		           margin: 10px 0;
+		           font-size: 16px;
+		       }
+		       .claim-details strong {
+		           display: inline-block;
+		           width: 120px;
+		           font-weight: bold;
+		       }
+		
+       /* footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer h3 {
+            margin: 0;
+        }
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .copyright {
+            margin-top: 10px;
+            font-size: 14px;
+        }*/
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <h1>View Claims</h1>
+        <a th:href="@{/index}">Back to Claim Dashboard</a>
+    </header>
+
+    <main>
+        <!-- Display error messages -->
+        <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+
+        <!-- Display success messages -->
+        <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+
+        <section class="form-section">
+            <h2>View Claims by Policy ID</h2>
+            <form th:action="@{/claims/policy}" method="get">
+                <label for="policyId">Enter Policy ID:</label>
+                <input type="text" name="policyId" required />
+                <button type="submit" class="btn">Search Claims</button>
+            </form>
+
+            <!-- Table for Claims by Policy ID -->
+            <div th:if="${claims != null}">
+                <h3>Claims for Policy ID: <span th:text="${policyId}"></span></h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Claim ID</th>
+                            <th>Claim Amount</th>
+                            <th>Claim Date</th>
+                            <th>Status</th>
+							<th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="claim : ${claims}">
+                            <td th:text="${claim.claimId}"></td>
+                            <td th:text="${claim.claimAmount}"></td>
+                            <td th:text="${claim.claimDate}"></td>
+                            <td th:text="${claim.claimStatus}"></td>
+							<td th:text="${claim.claimDescription}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+		<section class="form-section">
+				    <h2>View Claim by Claim ID</h2>
+				    <form th:action="@{/claims/viewClaimById}" method="get">
+				        <label for="claimId">Enter Claim ID:</label>
+				        <input type="number" name="claimId" required />
+				        <button type="submit" class="btn">Fetch Details</button>
+				    </form>
+
+				    <!-- Container for Claim Details -->
+				    <div th:if="${claim != null}">
+				        <h3>Claim Details</h3>
+				        <table border="1">
+				            <thead>
+				                <tr>
+				                    <th>Claim ID</th>
+									<th>Policy ID</th>
+				                    <th>Status</th>
+				                    <th>Description</th>
+				                    <th>Amount</th>
+									<th>Claim Date</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                <tr>
+				                    <td th:text="${claim.claimId}"></td>
+									<td th:text="${claim.policy != null ? claim.policy.policyId : 'N/A'}"></td>
+
+				                    <td th:text="${claim.claimStatus}"></td>
+				                    <td th:text="${claim.claimDescription}"></td>
+				                    <td th:text="${claim.claimAmount}"></td>
+									<td th:text="${claim.claimDate}"></td>
+									
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>
+				</section>
+		    </main>
+
+    </main>
+
+   <!--- <footer>
+        <div class="footer-content">
+            <div>
+                <h3>PolicyTrust</h3>
+                <p>Your trusted partner for comprehensive protection and security.</p>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <p>Email: info@policytrust.com</p>
+                <p>Phone: (+012) 3567 7650</p>
+            </div>
+        </div>
+        <p class="copyright">© 2024 PolicyTrust. All Rights Reserved.</p>
+    </footer>-->
+
+    <script>
+		
+		function toggleClaimDetails() {
+		            var details = document.getElementById("claimDetails");
+		            if (details.style.display === "none" || details.style.display === "") {
+		                details.style.display = "block";
+		            } else {
+		                details.style.display = "none";
+		            }
+		        }
+				
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = document.querySelector(".error-message");
+            var successMessage = document.querySelector(".success-message");
+
+            if (errorMessage && errorMessage.textContent.trim() !== "") {
+                alert("Error: " + errorMessage.textContent);
+            }
+
+            if (successMessage && successMessage.textContent.trim() !== "") {
+                alert("Success: " + successMessage.textContent);
+            }
+        });
+    </script>
+</body>
+</html>

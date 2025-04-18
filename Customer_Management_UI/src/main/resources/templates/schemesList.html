@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Schemes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .scheme-box {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .scheme-box h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .scheme-box p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Available Schemes</h1>
+
+    <div class="scheme-box" th:each="scheme : ${schemes}">
+        <h2 th:text="${scheme.schemeName}"></h2>
+        <p><strong>Description:</strong> <span th:text="${scheme.description}"></span></p>
+        <p><strong>Benefits:</strong> <span th:text="${scheme.benefits}"></span></p>
+        <p><strong>Eligibility Criteria:</strong> <span th:text="${scheme.eligibilityCriteria}"></span></p>
+		<a th:href="@{/viewPoliciesInScheme(schemeId=${scheme.id})}" class="btn">View Policies</a>
+    </div>
+
+   
+</div>
+
+</body>
+</html>

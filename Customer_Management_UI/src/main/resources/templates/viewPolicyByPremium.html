@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Policies by Premium Range</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <style>
+        .custom-container { max-width: 70%; margin: auto; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+<div class="container custom-container">
+    <h2 class="text-center mb-4">View Policies by Premium Range</h2>
+    <form id="viewByPremiumForm">
+        <div class="mb-3">
+            <label for="minPremium" class="form-label">Minimum Premium</label>
+            <input type="number" id="minPremium" step="0.01" class="form-control" placeholder="Enter minimum premium" required min="0.01" />
+        </div>
+        <div class="mb-3">
+            <label for="maxPremium" class="form-label">Maximum Premium</label>
+            <input type="number" id="maxPremium" step="0.01" class="form-control" placeholder="Enter maximum premium" required min="0.01" />
+        </div>
+        <button type="submit" class="btn btn-info">Search</button>
+        <a href="/policy-management/view-dashboard" class="btn btn-secondary ms-2">Back</a>
+    </form>
+    <div id="premiumResults" class="mt-4" style="display:none;">
+        <h5>Policies:</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Policy Name</th>
+                        <th>Policy ID</th>
+                        <th>Start Date</th>
+                        <th>Total Premium</th>
+                        <th>Maturity</th>
+                        <th>Term</th>
+                        <th>Status</th>
+                        <th>Annuity</th>
+                    </tr>
+                </thead>
+                <tbody id="premiumTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+document.getElementById("viewByPremiumForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var minPremium = document.getElementById("minPremium").value;
+    var maxPremium = document.getElementById("maxPremium").value;
+    fetch("http://localhost:8030/policy/premium?min=" + minPremium + "&max=" + maxPremium)
+    .then(response => {
+        if(!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+        }
+        return response.json();
+    })
+    .then(data => {
+        var tbody = document.getElementById("premiumTableBody");
+        tbody.innerHTML = "";
+        if(data.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='8' class='text-center'>No policies found in this premium range.</td></tr>";
+        } else {
+            data.forEach(function(p){
+                var row = "<tr>" +
+                    "<td>" + p.policyname + "</td>" +
+                    "<td>" + p.policyId + "</td>" +
+                    "<td>" + p.startDate + "</td>" +
+                    "<td>" + p.totalPremiumAmount + "</td>" +
+                    "<td>" + p.maturityAmount + "</td>" +
+                    "<td>" + p.policyterm + "</td>" +
+                    "<td>" + p.policyStatus + "</td>" +
+                    "<td>" + p.annuityTerm + "</td>" +
+                    "</tr>";
+                tbody.innerHTML += row;
+            });
+        }
+        document.getElementById("premiumResults").style.display = "block";
+        alert("Success: Policies loaded successfully!");
+    })
+    .catch(err => {
+        alert("Error: " + err.message);
+    });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

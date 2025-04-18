@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Scheme Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        .btn-custom {
+            background-color: #3f77e3;
+            border-color: #3f77e3;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #3f77e3;
+            border-color: #3f77e3;
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ddd;
+        }
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .navbar {
+            background: white;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Dashboard Content -->
+<main class="container py-5">
+    <h2 class="text-center mb-4">Welcome to Scheme Management</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card p-4 text-center">
+                <h5>View Available Schemes</h5>
+                <p>Explore various types of schemes.</p>
+                <a th:href="@{/schemes}" class="btn btn-custom">View Schemes</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-4 text-center">
+                <h5>View Application History</h5>
+                <p>Check the status of your applied policies.</p>
+                <a th:href="@{/user/history}" class="btn btn-custom">View History</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</main>
+
+<footer class="text-white text-center py-3 mt-auto bg-dark">
+    <div class="container">
+        <p class="mb-0">© 2025 Scheme Management System — All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

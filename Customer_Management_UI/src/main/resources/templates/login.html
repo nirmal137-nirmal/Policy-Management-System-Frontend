@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+			position: relative;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+		input {
+				            border: 1px solid #ccc;
+				            padding: 12px;
+							width: 88%;
+				            font-size: 16px;
+				            margin-top: 10px;
+				            border-radius: 5px;
+	     }
+        #btn {
+            width: 95%;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .register-link, .admin-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .register-link a, .admin-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .register-link a:hover, .admin-link a:hover {
+            text-decoration: underline;
+        }
+			.back-button {
+					 position: absolute;
+					 top: 34px;
+					 left:38px;
+					 background: none;
+					 border: none;
+					 font-size: 35px;
+					 cursor: pointer;
+					 color: #007bff;
+					 transition: 0.3s;
+		}
+
+		.back-button:hover {
+					 color: #0056b3;
+					 transform: scale(1.1);
+		}
+    </style>
+</head>
+<body>
+
+<div class="container">
+	<span class="back-button" onclick="goBack()">←</span>
+    <h2>Login</h2>
+	<p th:if="${error}" style="color: red;">[[${error}]]</p>
+    <form th:action="@{/loginCust}" name="myForm" method="post" th:object="${customer}">
+        <div class="form-group">
+            <input type="text" placeholder="Email" id="email" name="email" th:field="*{email}" required>
+        </div>
+
+        <div class="form-group">
+            <input type="password" placeholder="Password" id="password" name="password" th:field="*{password}" required>
+        </div>
+        <button type="submit" id="btn">Login</button>
+    </form>
+	<div class="register-link">
+	           Don't have an account? <a th:href="@{/register}">Register here</a>
+	       </div>
+		   <div class="admin-link">
+               If Admin? <a th:href="@{/adminLogin}">Login here</a>
+		   	</div>
+</div>
+<script>
+
+	function goBack() {
+		           window.history.back();
+		       }
+	function checkFormCompletion() {
+					        let form = document.forms['myForm'];
+					        let inputs = form.querySelectorAll("input[required]");
+					        let allFilled = true;
+
+					        inputs.forEach(input => {
+					            if (!input.value.trim()) {
+					                allFilled = false;
+					            }
+					        });
+
+					        let registerButton = document.getElementById('btn');
+					        registerButton.style.opacity = allFilled ? "1" : "0.6";
+					    }
+
+					    document.addEventListener("DOMContentLoaded", function () {
+					        let form = document.forms['myForm'];
+					        let inputs = form.querySelectorAll("input[required]");
+
+					        inputs.forEach(input => {
+					            input.addEventListener("input", checkFormCompletion);
+					        });
+
+					    });
+</script>
+
+</body>
+</html>

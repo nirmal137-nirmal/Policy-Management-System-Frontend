@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Policy Trust</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding-top: 60px;
+        }
+
+		.header {
+			width: 100%;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    background: white;
+		    padding: 20px 40px;
+		    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		    position: sticky;
+		    top: 0;
+		    z-index: 1000;
+		}
+		.logo {
+				    font-size: 22px;
+				    font-weight: bold;
+				    color: #007bff;
+				    text-transform: uppercase;
+				    letter-spacing: 1.5px;
+				    font-family: 'Poppins', sans-serif;
+				    text-shadow: 2px 2px 5px rgba(0, 123, 255, 0.3);
+				}
+
+		.menu-list {
+		    display: flex;
+		    gap: 27px;
+		}
+
+		.menu-list a {
+		    text-decoration: none;
+		    font-size: 16px;
+		    font-weight: 500;
+		    color: #333;
+		    transition: color 0.3s ease;
+		}
+
+		.menu-list a:last-child {
+		    font-weight: bolder;
+		}
+
+		.menu-list a:hover {
+		    color: #007bff;
+		}
+
+		.nav-buttons a {
+		    text-decoration: none;
+		    padding: 8px 18px;
+		    border-radius: 6px;
+		    font-size: 14px;
+		    color: white;
+		    transition: 0.3s;
+		}
+
+		.register-btn {
+		    background: #007bff;
+		}
+
+		.register-btn:hover {		
+		    background: #0056b3;
+		}
+
+		.login-btn {
+		    background: #28a745;
+		}
+
+		.login-btn:hover {
+		    background: #218838;
+		}
+
+        h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+		form{
+			width: 35%;
+			
+		}
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #0088cc);
+            transform: scale(1.02);
+        }
+
+        .map-container {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+			width: 80%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Contact Us</h2>
+        
+        <form action="/submit-contact" method="post">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" name="name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email" name="email" required>
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Your Message" name="message" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+        </form>
+
+        <!-- Google Maps (Optional) -->
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.222054136606!2d-122.084!3d37.42199999999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb8fd90c3e431%3A0x50f87d6f8c0d0!2sGoogleplex!5e0!3m2!1sen!2sus!4v1629999999999"
+                allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+</body>
+</html>

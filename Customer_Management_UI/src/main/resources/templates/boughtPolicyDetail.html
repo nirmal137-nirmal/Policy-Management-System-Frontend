@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Policy Purchased</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { width: 50%; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+        h2 { color: #007bff; }
+        .policy-info p { font-size: 18px; margin: 10px 0; }
+        .back-button { background-color: #007bff; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 20px; }
+        .back-button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Policy Purchased Successfully!</h2>
+        <div class="policy-info">
+            <p><strong>Policy ID:</strong> <span th:text="${boughtPolicy.boughtPolicyId}"></span></p>
+            <!--<p><strong>Policy Name:</strong> <span th:text="${boughtPolicy.policyName}"></span></p>-->
+            <p><strong>Start Date:</strong> <span th:text="${boughtPolicy.startDate}"></span></p>
+            <p><strong>Total Premium Amount:</strong> ₹<span th:text="${boughtPolicy.totalPremiumAmount}"></span></p>
+            <p><strong>Maturity Amount:</strong> ₹<span th:text="${boughtPolicy.maturityAmount}"></span></p>
+            <p><strong>Policy Term:</strong> <span th:text="${boughtPolicy.policyTerm}"></span> years</p>
+            <p><strong>Policy Status:</strong> <span th:text="${boughtPolicy.policyStatus}"></span></p>
+            <p><strong>Annuity Term:</strong> <span th:text="${boughtPolicy.annuityTerm}"></span></p>
+        </div>
+        <span class="back-button" onclick="goBack()">Back</span>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

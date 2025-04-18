@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Policy List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .policy-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .policy-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            text-align: center;
+            min-width: 250px;
+        }
+        .policy-card h3 {
+            margin: 0;
+            color: #007bff;
+        }
+        .view-details {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .view-details:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Policy List</h2>
+        <div class="policy-grid">
+            <div th:each="policy : ${policies}" class="policy-card">
+                <h3>Policy ID: <span th:text="${policy.policyId}"></span></h3>
+                <a th:href="@{/viewPolicyDetails(policyId=${policy.policyId})}" class="view-details">View Details</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

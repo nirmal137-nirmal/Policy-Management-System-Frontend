@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Customer Details</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Back Button Inside Container */
+        .back-button {
+            position: absolute;
+            top: 35px;
+            left: 28px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #007bff;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+			margin-top: 10px;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #0088cc);
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+		
+        <span class="back-button" onclick="goBack()">←</span>
+
+        <h2>Update Details</h2>
+        
+        <form th:action="@{/updateCustomer}" method="post" th:object="${customer}">
+            <div class="form-group">
+                <input type="text" placeholder="Name" id="name" name="name" th:field="*{name}">
+            </div>
+            <div class="form-group">
+                <input type="number" placeholder="Age" id="age" name="age" th:field="*{age}">
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Phone" id="phone" name="phone" th:field="*{phone}">
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Address" id="address" name="address" th:field="*{address}">
+            </div>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+</body>
+</html>

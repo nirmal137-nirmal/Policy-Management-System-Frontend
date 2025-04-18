@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Feedback</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f2f5, #d9e3f0);
+            padding: 20px;
+        }
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 40%;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Submit Your Feedback</h2>
+    <div class="form-container">
+        <form th:action="@{/feedback/submit}" method="post" th:object="${feedback}">
+            
+            <!-- Scheme ID - integer allowed -->
+            <label>Scheme ID:</label>
+            <input type="text" th:field="*{scheme.id}" placeholder="Enter Scheme ID">
+
+            <!-- Customer ID - string allowed -->
+            <label>Customer ID:</label>
+            <input type="text" th:field="*{customer.id}" placeholder="Enter Customer ID">
+
+            <!-- Optional: Customer Name (can be pre-filled if needed) -->
+            <label>Customer Name:</label>
+            <input type="text" th:field="*{customer.name}" placeholder="Enter Customer Name">
+
+            <!-- Rating -->
+            <label>Rating:</label>
+            <select th:field="*{rating}">
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="2">⭐⭐ Below Average</option>
+                <option value="1">⭐ Poor</option>
+            </select>
+
+            <!-- Comments -->
+            <label>Comments:</label>
+            <textarea th:field="*{comments}" rows="4" placeholder="Enter your comments here..."></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+
+	<a th:href="@{/feedback}" class="back-link">⬅ Back to Home</a>
+
+
+</body>
+</html>

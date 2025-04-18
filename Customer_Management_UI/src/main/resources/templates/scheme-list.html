@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Scheme List</title>
+    <style>
+        /* General Styles */
+        /*body {*/
+        /*    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+        /*    margin: 0;*/
+        /*    padding: 10px;*/
+        /*    background-color: #d3d3d3; !* Grey background *!*/
+        /*    color: #333;*/
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*    min-height: 100vh;*/
+        /*}*/
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px 90px; /* Top & Bottom: 20px, Left & Right: 90px */
+            background-color: #d3d3d3;
+            color: #333;
+        }
+
+
+        /* Container Frame */
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 0;
+        }
+
+        h1 {
+            color: #3f77e3; /* Changed Admin Dashboard to Green */
+            margin: 0 0 20px 0;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        /* Button Styles */
+        .btn {
+            background-color: #3f77e3; /* Changed Create New Scheme button to Green */
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #3f77e3; /* Slightly darker green */
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #3f77e3; /* Green */
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Status Styles */
+        .status-active {
+            color: #3f77e3; /* Green */
+            font-weight: 500;
+        }
+
+        .status-inactive {
+            color: #e74c3c; /* Red */
+            font-weight: 500;
+        }
+
+        /* Actions Column */
+        .actions a {
+            margin-right: 10px;
+            color: #3f77e3; /* Green */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .actions a:hover {
+            color: #3f77e3; /* Darker Green */
+            text-decoration: underline;
+        }
+
+        /* Toggle Link */
+        .toggle-link {
+            color: #e67e22; /* Orange */
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-link.active {
+            color: #3f77e3; /* Green for Active */
+        }
+
+        .toggle-link.inactive {
+            color: #e74c3c; /* Red for Inactive */
+        }
+
+        .toggle-link:hover {
+            color: #d35400; /* Darker Orange */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div
+            style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* space between columns */
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
+  "
+    >
+
+        <a th:href="@{/schemes/new}" class="btn">Create New Scheme</a>
+
+<!--         Search Form for Scheme by ID -->
+        <form th:action="@{/schemes/view}" method="get" style="display: inline-block; gap: 10px; align-items: center;">
+            <input type="number" name="id" placeholder="Search by ID"
+                   style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100px; font-size: 14px;">
+            <button type="submit" class="btn" style="padding: 10px 20px;">Search</button>
+        </form>
+
+        <!-- Search by Scheme Name Form -->
+        <form th:action="@{/schemes/search}" method="get" style="display: inline-block;">
+            <input type="text" name="schemeName" placeholder="Search by Scheme Name"
+                   style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 200px;">
+            <button type="submit" class="btn">Search by Name</button>
+        </form>
+
+        <a th:if="${schemes.isEmpty()}" th:href="@{/schemes}"
+           class="btn"
+           style="background-color: #e74c3c; padding: 10px 20px; text-decoration: none; color: white; border-radius: 5px; cursor: pointer;">
+            Back
+        </a>
+
+    </div>
+
+    <p th:if="${errorMessage}" style="color: #e74c3c; font-size: 16px; font-weight: bold;">
+        <span th:text="${errorMessage}"></span>
+    </p>
+
+    <!-- Empty State Message if No Schemes Found -->
+    <p th:if="${schemes == null or schemes.isEmpty() and errorMessage == null}" style="color: #e67e22; font-weight: bold;">
+        No schemes available.
+    </p>
+
+    <!-- Scheme Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Scheme Name</th>
+            <th>Eligibility</th>
+            <th>Details</th>
+            <th>Status</th>
+            <th class="actions">Actions</th>
+            <th>Policies</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="scheme : ${schemes}">
+            <td th:text="${scheme.id}">-</td>
+            <td th:text="${scheme.schemeName}">-</td>
+            <td th:text="${scheme.eligibilityCriteria}">-</td>
+            <td th:text="${scheme.schemeDetails}">-</td>
+            <td>
+                <a class="toggle-link"
+                   th:href="@{/schemes/toggle-status/{id}(id=${scheme.id}, isActive=${!scheme.schemeIsActive})}"
+                   th:classappend="${scheme.schemeIsActive ? 'active' : 'inactive'}"
+                   th:text="${scheme.schemeIsActive ? 'Active' : 'Inactive'}">
+                </a>
+            </td>
+            <td class="actions">
+                <a th:href="@{/schemes/edit/{id}(id=${scheme.id})}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/viewAdminPoliciesInScheme(schemeId=${scheme.id})}">View Policies</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+

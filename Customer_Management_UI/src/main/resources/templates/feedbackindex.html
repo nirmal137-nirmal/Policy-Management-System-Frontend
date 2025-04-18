@@ -1,0 +1,62 @@
+<!-- Updated index.html to match controllers -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Feedback Management</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f2f5, #c9d6ff);
+            padding: 30px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav a {
+            display: block;
+            width: 250px;
+            padding: 14px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+        }
+        .nav a:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+	<h2>Welcome to the Feedback Management System</h2>
+	    <p>Use this system to submit, update, and check feedback efficiently.</p>
+	    <div class="nav">
+	        <a th:href="@{/feedback/submit}">📩 Submit Feedback</a>
+	        <a th:href="@{/feedback/view}">🔍 View Your Feedback</a>
+			
+	    </div>
+		
+	</body>
+	</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home Page</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Banner Section */
+        .banner {
+            background-image: url('https://via.placeholder.com/1200x400'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin: 10px 0 0;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Glassmorphism Search Bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 10px;
+            width: 60%;
+            margin: 20px auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-container button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #ff7eb3;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        .search-container button:hover {
+            background: #ff5277;
+        }
+
+        .search-container .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Age Filter Sidebar */
+        .filter-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .filter-sidebar h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .filter-sidebar label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .filter-sidebar input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .filter-sidebar button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #4facfe;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .filter-sidebar button:hover {
+            background: #00f2fe;
+        }
+
+        /* Horizontal Line with Points */
+        .range-slider {
+            margin-top: 20px;
+        }
+
+        .range-slider input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .range-slider .values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Search Results */
+        .results-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        /* Table Styles */
+        .results-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 16px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-container th {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .results-container td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .results-container tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .results-container tbody tr:hover {
+            background: #dff9fb;
+            transform: scale(1.02);
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-container tbody tr td:first-child {
+            font-weight: bold;
+            color: #ff5733;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background: #ff7eb3;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .view-btn:hover {
+            background: #ff5277;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .search-container input {
+                width: 70%;
+            }
+
+            .banner h1 {
+                font-size: 2rem;
+            }
+
+            .banner p {
+                font-size: 1rem;
+            }
+        }
+
+
+
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h3>Admin Home Page</h3>
+
+    <!-- Banner -->
+    <div class="banner">
+        <h1>Welcome to the Admin Dashboard</h1>
+        <p>Manage your customers with ease and efficiency.</p>
+    </div>
+
+    <!-- Search Bar -->
+    <form id="searchForm" method="get" class="search-container" onsubmit="return setFormAction()">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text" id="searchQuery" name="query" placeholder="Search by ID (e.g., C001) or Name..." required>
+        <button type="submit">Search</button>
+    </form>
+
+
+    <!-- Search Results -->
+    <div class="results-container">
+        <p th:if="${customers == null || customers.isEmpty()}">No results found. Start searching...</p>
+        <table th:if="${customers != null && !customers.isEmpty()}">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${customers}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.age}"></td>
+                <td>
+                    <a th:href="@{/viewCustomer(id=${customer.id})}" class="view-btn">👁️ View Details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function setFormAction() {
+        const form = document.getElementById('searchForm');
+        const query = document.getElementById('searchQuery').value.trim();
+
+        console.log("Query:", query); // Debugging: Check the input value
+
+        if (/^C\d+$/.test(query)) {
+            console.log("ID detected. Setting action to /searchCustomerById");
+            form.action = '/searchCustomerById';
+        } else {
+            console.log("Name detected. Setting action to /searchCustomerByName");
+            form.action = '/searchCustomerByName';
+        }
+
+        console.log("Form action set to:", form.action);
+        return true;
+    }
+
+</script>
+</body>
+</html>

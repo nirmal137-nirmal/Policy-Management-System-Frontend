@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buy Policy</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { width: 50%; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+        h2 { color: #007bff; }
+        .policy-info label { font-weight: bold; }
+        .policy-info input { width: 100%; padding: 8px; margin-top: 5px; border: none; background: #f0f0f0; }
+        .buy-btn, .back-button { padding: 12px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 20px; }
+        .buy-btn { background-color: #28a745; color: white; border: none; }
+        .buy-btn:hover { background-color: #218838; }
+        .back-button { background-color: #007bff; color: white; border: none; }
+        .back-button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Buy Policy</h2>
+        <div class="policy-info">
+            <label>Policy ID:</label>
+            <input type="text" th:value="${policy.policyId}" readonly>
+
+            <label>Policy Name:</label>
+            <input type="text" th:value="${policy.policyName}" readonly>
+
+            <label>Start Date:</label>
+            <input type="text" th:value="${policy.startDate}" readonly>
+
+            <label>Total Premium Amount:</label>
+            <input type="text" th:value="${policy.totalPremiumAmount}" readonly>
+
+            <label>Maturity Amount:</label>
+            <input type="text" th:value="${policy.maturityAmount}" readonly>
+
+            <label>Policy Term (years):</label>
+            <input type="text" th:value="${policy.policyTerm}" readonly>
+
+            <label>Policy Status:</label>
+            <input type="text" th:value="${policy.policyStatus}" readonly>
+
+            <label>Annuity Term:</label>
+            <input type="text" th:value="${policy.annuityTerm}" readonly>
+        </div>
+
+        <form th:action="@{/buyPolicy}" method="post" th:object="${boughtPolicy}">
+            <!-- Hidden fields for form submission -->
+            <input type="hidden" th:field="*{policy.policyId}" />
+            <input type="hidden" th:field="*{policy.policyName}" />
+            <input type="hidden" th:field="*{policy.startDate}" />
+            <input type="hidden" th:field="*{policy.totalPremiumAmount}" />
+            <input type="hidden" th:field="*{policy.maturityAmount}" />
+            <input type="hidden" th:field="*{policy.policyTerm}" />
+            <input type="hidden" th:field="*{policy.policyStatus}" />
+            <input type="hidden" th:field="*{policy.annuityTerm}" />
+
+            <!-- Customer ID input -->
+            <label for="customerId">Customer ID:</label>
+            <input type="text" id="customerId" name="customerId" placeholder="Enter Customer ID" required>
+
+            <button type="submit" class="buy-btn">Buy Policy</button>
+        </form>
+
+        <span class="back-button" onclick="goBack()">Back</span>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

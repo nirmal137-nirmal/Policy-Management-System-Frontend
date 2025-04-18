@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 8px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			position: sticky;
+			top: 0;
+        }
+
+        .menu-list {
+            display: flex;
+            gap: 27px;
+        }
+
+        .menu-list a {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+		.menu-list a:first-child {
+		    font-weight: bolder;
+		}
+
+
+        .menu-list a:hover {
+            color: #007bff;
+        }
+
+        .user-menu {
+            position: relative;
+            cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 13px;
+        }
+
+        .user-icon {
+            font-size: 24px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 55px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            width: 150px;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f1f1f1;
+        }
+		.logo {
+				    font-size: 22px;
+				    font-weight: bold;
+				    color: #007bff;
+				    text-transform: uppercase;
+				    letter-spacing: 1.5px;
+				    font-family: 'Poppins', sans-serif;
+				    text-shadow: 2px 2px 5px rgba(0, 123, 255, 0.3);
+				}
+				.hero-section{
+					display: flex;
+					align-items: center;
+					padding: 5px 70px;
+					gap: 0;
+				}
+				.hero-section .right-section{
+					padding-right: 30px;
+				}
+				.button-group {
+				    margin-top: 15px;
+				}
+
+				.btn-primary, .btn-secondary {
+				    display: inline-block;
+				    padding: 12px 24px;
+				    font-size: 16px;
+				    font-weight: bold;
+				    text-decoration: none;
+				    border-radius: 6px;
+				    transition: background 0.3s ease, transform 0.2s ease;
+				}
+
+				.btn-primary {
+				    background-color: #007bff;
+				    color: white;
+				    margin-right: 10px;
+				}
+
+				.btn-secondary {
+				    background-color: #28a745;
+				    color: white;
+				}
+
+				.btn-primary:hover {
+				    background-color: #0056b3;
+				    transform: scale(1.05);
+				}
+
+				.btn-secondary:hover {
+				    background-color: #218838;
+				    transform: scale(1.05);
+				}
+
+				.features {
+				    text-align: center;
+				    padding: 40px;
+				    background: white;
+				}
+
+				.features h2 {
+				    font-size: 28px;
+				    color: #333;
+				}
+
+				.feature-box {
+				    display: flex;
+				    justify-content: space-around;
+				    margin-top: 20px;
+				}
+
+				.feature {
+				    width: 30%;
+				    padding: 20px;
+				    background: #f1f1f1;
+				    border-radius: 10px;
+				}
+
+				.testimonials {
+				    padding: 50px;
+				    text-align: center;
+				    background: #f8f9fa;
+				}
+
+				.testimonial-container {
+				    display: flex;
+				    justify-content: center;
+				    gap: 20px;
+				    flex-wrap: wrap;
+				    margin-top: 20px;
+				}
+
+				.testimonial-box {
+				    width: 280px;
+				    background: #f1f1f1;
+				    padding: 20px;
+				    border-radius: 10px;
+				    box-shadow: 1px 1px 10px gray;
+				    text-align: center;
+				    transition: transform 0.3s;
+				}
+
+				.testimonial-box:hover {
+				    transform: translateY(-5px);
+				}
+
+				.testimonial-img {
+				    width: 80px;
+				    height: 80px;
+				    border-radius: 50%;
+				    margin-bottom: 15px;
+				    border: 3px solid #007bff;
+				}
+
+				.testimonial-box h3 {
+				    margin: 10px 0;
+				    font-size: 18px;
+				    color: #333;
+				}
+
+				.testimonial-box p {
+				    font-size: 14px;
+				    color: #666;
+				}
+
+
+				.footer {
+				    background: #007bff;
+				    color: white;
+				    text-align: center;
+				    padding: 15px;
+				}
+
+				.footer a {
+				    color: white;
+				    margin: 0 10px;
+				    text-decoration: none;
+				}
+				
+    </style>
+</head>
+<body>
+<div class="hero-section">
+    <img width="700px" height="600px" src="https://media-hosting.imagekit.io//7cc5171d8c4e4675/output-onlinegiftools.gif?Expires=1836635502&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=CuFhll9oDMc~3ZUv~dxsB7xbQHaf1A3aloP0dTZk0jfaazUZJATG~g0PA9~CS2jqyaCF4JUIBXbsM2SM8Jdk0OucHGwnm~t9CRUi80dnyXuiNg6F4YGE6RV9Zk-FcUfmY8ZXIpnCGifNuFkn9PzPs9soqP3zYo7~BoSlqrg~GtfS7ndjbHBPq1RRqE~X6pSnO3lI3wkXq2o55mO~E48pKM0oHns8zgJA7Ytbp4rKYqNnBefBuRXfK0mgz3pFze8DLMg4KH0f9zFEZKIGqBn2gmqk5qNXxbwq7zlP8IjEvgbrYVftzOpKmO~OK4zdu4NClM8BMaWSR88tGMWyj7xR~Q__" alt="Welcome Image"/>
+    <div class="right-section">
+        <h1>Welcome, <br/><span style="color: #007bff; font-size: 40px; font-weight: 700;" th:text="${customer.name}"></span></h1>
+        <p style="font-size: 18px; color: #555; line-height: 1.5;">
+            Discover the best policies and schemes designed just for you.  
+            Secure your future and make informed decisions with our <span style="font-weight: 700;">Policy Trust</span>.
+        </p>
+        <p style="font-size: 16px; color: #777;">
+            Click below to explore our **exclusive policies** and **beneficial schemes** tailored to your needs.
+        </p>
+        
+        <div class="button-group">
+			<a th:href="@{/viewPoliciesInCustDashboard}" target="contentFrame" class="btn-primary">Explore Policies</a>
+			<a th:href="@{/viewSchemesInCustDashboard}" target="contentFrame" class="btn-secondary">View Schemes</a>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="features">
+    <h1>Why Choose Policy Trust?</h1>
+    <div class="feature-box">
+        <div class="feature">
+            <h2>Trusted Policies</h2>
+			<img width="400" height="300" src="https://cdni.iconscout.com/illustration/premium/thumb/insurance-policy-3677842-3087680.png"/>
+            <p>Government-approved policies for your financial security.</p>
+        </div>
+        <div class="feature">
+            <h2>Easy Claims</h2>
+			<img src="https://media-hosting.imagekit.io//cb842506eb8a421d/6wrlhdek.png?Expires=1836639258&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=S5zHiDtEIqx9iPRVR7bOmQqdKvuYkMNDmXDagaCb1HxXhgWmeSiHpSADUiOc0ikUbPj556zbUm5pZD9wTtvMk66WQcIloLIvmLBachAotjjTDF82uATgfzwFP74bsNfUFn2J35IPEeYgywe1AAIaVEGGC04n4X~Rg~hWSoCZv9bJseCkIDAh44ZCupb2K7FaPQT3fe7aWszyq2bnVReWJxOQcEHW6iC3Q3P4Xr0rR-apPuJkjpesWA0JjZvmrXCazJcibGJJpy04igsXIdq3G9ksM2DdSoplFv0qpvTGj9-rXIBrfxh1O4ewtE9d8tMpGZeald2PZydlOjG8A4G~8Q__" />
+            <p>Fast and hassle-free claim processing.</p>
+        </div>
+        <div class="feature">
+            <h2>24/7 Support</h2>
+			<img width="300" height="290" src="https://cdni.iconscout.com/illustration/premium/thumb/24-hours-customer-support-9065828-7343020.png"/>
+            <p>Our team is here to help you anytime.</p>
+        </div>
+    </div>
+</div>
+
+<div class="testimonials">
+    <h1>What Our Customers Say</h1>
+    <div class="testimonial-container">
+        <div class="testimonial-box">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul S." class="testimonial-img">
+            <h3>Rahul S.</h3>
+            <p>"Policy Trust helped me find the perfect insurance plan. Highly recommend!"</p>
+        </div>
+        <div class="testimonial-box">
+            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Priya M." class="testimonial-img">
+            <h3>Priya M.</h3>
+            <p>"Excellent support and easy policy selection. Very satisfied!"</p>
+        </div>
+		<div class="testimonial-box">
+		            <img src="https://randomuser.me/api/portraits/men/47.jpg" alt="Praveen M." class="testimonial-img">
+		            <h3>Praveen M.</h3>
+		            <p>"Excellent support and easy policy selection. Very satisfied!"</p>
+		        </div>
+    </div>
+</div>
+</body>
+</html>

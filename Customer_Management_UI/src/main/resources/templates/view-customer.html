@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 flex flex-col items-center min-h-screen py-10">
+
+    <!-- Customer Details -->
+    <div class="w-full max-w-xl bg-white p-6 rounded-lg shadow mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">Customer Details</h2>
+        <div class="space-y-2 text-gray-700 text-center">
+            <p><strong>ID:</strong> <span th:text="${customer.id}"></span></p>
+            <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
+        </div>
+    </div>
+
+    <!-- Policies Table -->
+    <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow mb-8">
+        <h3 class="text-xl font-semibold mb-4 text-center text-green-700">Policies</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse border border-gray-300">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="border px-4 py-2 text-left">Policy ID</th>
+                        <th class="border px-4 py-2 text-left">Start Date</th>
+                        <th class="border px-4 py-2 text-left">Premium Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="policy : ${policies}" class="hover:bg-gray-50">
+                        <td class="border px-4 py-2" th:text="${policy.policyId}"></td>
+                        <td class="border px-4 py-2" th:text="${policy.startDate}"></td>
+                        <td class="border px-4 py-2" th:text="${policy.totalPremiumAmount}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Payments Table -->
+    <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow">
+        <h3 class="text-xl font-semibold mb-4 text-center text-red-700">Payments</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse border border-gray-300">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="border px-4 py-2 text-left">Payment ID</th>
+                        <th class="border px-4 py-2 text-left">Amount</th>
+                        <th class="border px-4 py-2 text-left">Payment Date</th>
+                        <th class="border px-4 py-2 text-left">Payment Type</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="payment : ${payments}" class="hover:bg-gray-50">
+                        <td class="border px-4 py-2" th:text="${payment.paymentId}"></td>
+                        <td class="border px-4 py-2" th:text="${payment.amount}"></td>
+                        <td class="border px-4 py-2" th:text="${payment.paymentDate}"></td>
+                        <td class="border px-4 py-2" th:text="${payment.paymentType}"></td>
+						
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Policy Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .policy-info {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .policy-info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .buy-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .buy-btn:hover {
+            background-color: #218838;
+        }
+		.back-button {
+			background-color: #007bff;
+			           color: white;
+			           border: none;
+			           padding: 12px 20px;
+			           font-size: 16px;
+			           border-radius: 5px;
+			           cursor: pointer;
+			           text-decoration: none;
+			           display: inline-block;
+			           margin-top: 20px;
+		        color: white;
+		        margin-bottom: 15px;
+		    }
+		    .back-button:hover {
+		        background-color: #0056b3;
+		    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Policy Details</h2>
+        <div class="policy-info">
+            <p><strong>Policy ID:</strong> <span th:text="${policy.policyId}"></span></p>
+            <p><strong>Start Date:</strong> <span th:text="${policy.startDate}"></span></p>
+            <p><strong>Total Premium Amount:</strong> ₹<span th:text="${policy.totalPremiumAmount}"></span></p>
+            <p><strong>Maturity Amount:</strong> ₹<span th:text="${policy.maturityAmount}"></span></p>
+            <p><strong>Policy Term:</strong> <span th:text="${policy.policyTerm}"></span> years</p>
+            <p><strong>Policy Status:</strong> <span th:text="${policy.policyStatus}"></span></p>
+            <p><strong>Annuity Term:</strong> <span th:text="${policy.annuityTerm}"></span></p>
+        </div>
+		<h4 style="color:#007bff">Login to buy the Policy..</h4>
+		<span class="back-button" onclick="goBack()">Back</span>
+    </div>
+</body>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</html>

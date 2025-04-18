@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Details</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+		.btn-group {
+		           margin-top: 25px;
+				   margin-bottom: 30px;
+	 }
+	.btn {
+		padding: 10px 13px;
+		border: none;
+		cursor: pointer;
+		font-size: 14px;
+		border-radius: 5px;
+		margin: 5px;
+	}
+	.btn-update {
+		background-color: #28a745;
+		color: white;
+	}
+	.btn-change {
+		background-color: #007bff;
+		color: white;
+	}
+	.btn-deactivate {
+		background-color: #dc3545;
+		color: white;
+	}
+			a{
+				text-decoration: none;
+				color: #007bff;
+				display: inline-block;
+				margin-top: 20px;
+				font-weight: bolder;
+			}
+			a:hover{
+				text-decoration: underline;
+			}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Account Details</h2>
+	<span style="font-size: 90px;" class="user-icon">&#128100;</span>
+	<p><strong>ID:</strong> <span style="color: #007bff;font: bold;" th:text="${customer.id}"></span></p>
+    <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
+	<p><strong>Age:</strong> <span th:text="${customer.age}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
+    <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+    <p><strong>Registered On:</strong> <span th:text="${customer.regDate}"></span></p>
+	<div class="btn-group">
+		<a th:href="@{/updateCust}" class="btn btn-update">update</a>
+		<a th:href="@{/changePassword}" class="btn btn-change">change password</a>
+		<a th:href="@{/deleteCustomer(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-deactivate">deactivate</a>
+	</div>
+    <a th:href="@{/dashboard}">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

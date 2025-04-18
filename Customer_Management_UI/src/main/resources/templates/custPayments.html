@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			position: relative;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+		.back-button {
+							 position: absolute;
+							 top: 34px;
+							 left:38px;
+							 background: none;
+							 border: none;
+							 font-size: 35px;
+							 cursor: pointer;
+							 color: #007bff;
+							 transition: 0.3s;
+				}
+
+				.back-button:hover {
+							 color: #0056b3;
+							 transform: scale(1.1);
+				}
+    </style>
+</head>
+<body>
+    <div class="container">
+		<span class="back-button" onclick="goBack()">←</span>
+        <h2>Payment Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Amount</th>
+                    <th>Payment Date</th>
+                    <th>Payment Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="payment : ${payments}">
+                    <td th:text="${payment.paymentId}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentDate}"></td>
+                    <td th:text="${payment.paymentType}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+	function goBack() {
+			           window.history.back();
+			       }
+</script>
+</html>

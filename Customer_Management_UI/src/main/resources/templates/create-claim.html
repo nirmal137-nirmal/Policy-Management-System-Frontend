@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Claim</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            margin: 0;
+            flex: 1;
+            text-align: center;
+        }
+        .navbar a {
+            background-color: white;
+            color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .form-section {
+            width: 40%;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 48%;
+        }
+        .save { background-color: #007bff; color: white; }
+        .clear { background-color: #dc3545; color: white; }
+        .delete { background-color: #dc3545; color: white; }
+        .save:hover { background-color: #0056b3; }
+        .clear:hover { background-color: #b52b3b; }
+        .delete:hover { background-color: #b52b3b; }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            text-align: center;
+        }
+		.delete-form {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    gap: 15px; /* Space between input and button */
+		    padding: 20px;
+		}
+
+		.delete-form input {
+		    width: calc(100% - 20px); /* Ensuring it stays within the container */
+		    padding: 10px;
+		    margin-bottom: 10px;
+		    border: 1px solid #ccc;
+		    border-radius: 5px;
+		}
+
+		.delete-form button {
+		    width: 20%;
+		}
+
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <h1>Create Claim</h1>
+        <a th:href="@{/index}">Back to Claim Dashboard</a>
+    </header>
+
+    <main>
+        <!-- Display error messages -->
+        <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+
+        <!-- Display success messages -->
+        <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+
+        <!-- Create Claim Form -->
+        <section class="form-section">
+            <h2>Create New Claim</h2>
+            <form th:action="@{/claims/createClaim}" th:object="${claim}" method="post">
+                <label for="policyId">Policy ID:</label>
+                <input type="text" id="policyId" th:field="*{policy.policyId}" placeholder="Enter Policy ID" required />
+                <p th:if="${#fields.hasErrors('policy.policyId')}" th:errors="*{policy.policyId}" class="error-message"></p>
+
+                <label for="claimDate">Claim Date:</label>
+                <input type="date" id="claimDate" th:field="*{claimDate}" required />
+                <p th:if="${#fields.hasErrors('claimDate')}" th:errors="*{claimDate}" class="error-message"></p>
+
+                <label for="claimDescription">Claim Description:</label>
+                <textarea id="claimDescription" th:field="*{claimDescription}" placeholder="Enter claim description" required></textarea>
+                <p th:if="${#fields.hasErrors('claimDescription')}" th:errors="*{claimDescription}" class="error-message"></p>
+
+                <label for="claimAmount">Claim Amount:</label>
+                <input type="number" id="claimAmount" th:field="*{claimAmount}" placeholder="Enter claim amount" required />
+                <p th:if="${#fields.hasErrors('claimAmount')}" th:errors="*{claimAmount}" class="error-message"></p>
+
+                <label for="claimStatus">Claim Status:</label>
+                <select id="claimStatus" th:field="*{claimStatus}">
+                    <option value="PENDING">Pending</option>
+                    <option value="PAID">Paid</option>
+                    <option value="REJECTED">Rejected</option>
+                </select>
+                <p th:if="${#fields.hasErrors('claimStatus')}" th:errors="*{claimStatus}" class="error-message"></p>
+				<label for="email">Email:</label>
+				   <input type="email" id="email" th:field="*{email}" placeholder="Enter your email" required />
+				   
+				   <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></p>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn save">Save Claim</button>
+                    <button type="reset" class="btn clear">Clear Form</button>
+                </div>
+            </form>
+        </section>
+
+		<!-- Delete Claim Form -->
+		<section class="form-section">
+		    <h2>Delete Claim</h2>
+		    <form th:action="@{/claims/delete}" method="post" class="delete-form">
+		        <label for="claimId">Claim ID:</label>
+		        <input type="number" id="claimId" name="claimId" placeholder="Enter Claim ID" required />
+		        <button type="submit" class="btn delete">Delete Claim</button>
+		    </form>
+		</section>
+    </main>
+
+    <!--<footer>
+        <div class="footer-content">
+            <div>
+                <h3>PolicyTrust</h3>
+                <p>Your trusted partner for comprehensive protection and security.</p>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <p>Email: info@policytrust.com</p>
+                <p>Phone: (+012) 3567 7650</p>
+            </div>
+        </div>
+        <p class="copyright">© 2024 PolicyTrust. All Rights Reserved.</p>
+    </footer>-->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = document.querySelector(".error-message");
+            var successMessage = document.querySelector(".success-message");
+
+            if (errorMessage && errorMessage.textContent.trim() !== "") {
+                alert("Error: " + errorMessage.textContent);
+            }
+
+            if (successMessage && successMessage.textContent.trim() !== "") {
+                alert("Success: " + successMessage.textContent);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+			position: relative;
+            justify-content: space-between;
+            align-items: center;
+            width: 70%;
+            height: 85vh;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .left-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            color: black;
+        }
+        .left-section img {
+            width: 80%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .left-section h2 {
+            color: #0056b3;
+        }
+        .left-section p {
+            color: #333;
+        }
+        .btn-light {
+            display: block;
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px auto;
+            width: 150px;
+            text-align: center;
+        }
+        .btn-light:hover {
+            background: #0056b3;
+        }
+        .right-section {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            color: #0056ff;
+            margin-bottom: 10px;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0056ff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .terms-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-block: 11px;
+			font-size: 15px;
+        }
+        .terms-container input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-top: 0;
+        }
+        .terms-container label .terms-link{
+            color: #007bff;
+            cursor: pointer;
+			font-size: 15px;
+        }
+        .terms-container label .terms-link:hover {
+            text-decoration: underline;
+        }
+        .formError {
+            font-size: small;
+            color: red;
+        }
+        .password-container {
+            display: flex;
+            align-items: center;
+            width: 102%;
+			border: 1px solid #ccc;
+		    border-radius: 5px;
+			margin-top: 10px;
+			padding-right: 10px;
+        }
+        .password-container input {
+            flex: 1;
+			outline: none;
+			margin-top: 0;
+			border: none;
+        }
+        .password-container button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+		.fa-eye-slash{
+			display: none;
+		}
+		#btn{
+			opacity: 0.6;
+		}
+		i{
+			cursor: pointer;
+		}
+		.back-button {
+				 position: absolute;
+				 top: 30px;
+				 left:38px;
+				 background: none;
+				 border: none;
+				 font-size: 40px;
+				 cursor: pointer;
+				 color: #007bff;
+				 transition: 0.3s;
+	}
+
+	.back-button:hover {
+				 color: #0056b3;
+				 transform: scale(1.1);
+	}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+		<span class="back-button" onclick="goBack()">←</span>
+        <div class="left-section">
+            <img src="https://thumbs.dreamstime.com/b/policy-management-label-presented-happy-little-man-against-white-background-32211356.jpg" alt="Encouraging Image">
+            <h2>Join PolicyTrust Today</h2>
+            <p>Become a valued member of PolicyTrust and discover a world where trust, transparency, and tailored insurance solutions come together for you.</p>
+            <a href="/" class="btn-light">Home</a>
+        </div>
+        <div class="right-section">
+            <h1>Register</h1>
+            <p th:if="${error}" style="color: red; margin-block: 5px;">[[${error}]]</p>
+            
+            <form onsubmit="return validate()" th:action="@{/addCustomer}" name="myForm" method="post" th:object="${customer}">
+                <input type="text" placeholder="Full Name" name="name" th:field="*{name}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('name')}" 
+				      th:text="${validationErrors.get('name')}" class="formError"></span>
+					  
+                <input type="text" placeholder="Email Address" name="email" th:field="*{email}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('email')}" 
+				      th:text="${validationErrors.get('email')}" class="formError"></span>
+					  
+				<input type="number" placeholder="Age" name="age" th:field="*{age}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('age')}" 
+					th:text="${validationErrors.get('age')}" class="formError"></span>
+
+                <input type="text" placeholder="Phone" name="phone" th:field="*{phone}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('phone')}" 
+				      th:text="${validationErrors.get('phone')}" class="formError"></span>
+
+                <input type="text" placeholder="Address" name="address" th:field="*{address}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('address')}" 
+				      th:text="${validationErrors.get('address')}" class="formError"></span>
+
+                <div class="password-container">
+                    <input class="no-outline" type="password" placeholder="Password" name="password" th:field="*{password}" id="passwordField" required>
+					<span onclick="togglePassword()">
+						<i style="font-size: larger;" class="fa-solid fa-eye"></i>
+						<i style="font-size: larger;" class="fa-solid fa-eye-slash"></i>
+					</span>
+                </div>
+				<span th:if="${validationErrors != null and validationErrors.containsKey('password')}" 
+				      th:text="${validationErrors.get('password')}" class="formError"></span>
+
+                <input type="password" placeholder="Confirm Password" name="password1" required>
+				<span style="color: red;" id="passConfirmError" class="formError"></span>
+
+                <div class="terms-container">
+                    <input type="checkbox" id="terms" required>
+                    <label>I agree to the <span class="terms-link">Terms & Conditions</span></label>
+                </div>
+
+                <button id="btn" type="submit">Register</button>
+            </form>
+
+            <p class="login-link">Already have an account? <a th:href="@{/login}">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+		function goBack() {
+			           window.history.back();
+			       }
+		function togglePassword() {
+		    let passwordField = document.getElementById("passwordField");
+		    let eyeIcon = document.querySelector(".fa-eye");
+		    let eyeSlashIcon = document.querySelector(".fa-eye-slash");
+
+		    if (passwordField.type === "password") {
+		        passwordField.type = "text";
+		        eyeIcon.style.display = "none";
+		        eyeSlashIcon.style.display = "inline";
+		    } else {
+		        passwordField.type = "password";
+		        eyeIcon.style.display = "inline";
+		        eyeSlashIcon.style.display = "none";
+		    }
+		}
+			
+			
+			function validate(){
+				let password=document.forms['myForm']['password'].value;
+				let password1=document.forms['myForm']['password1'].value;
+				console.log(password1);
+				if(password1!==password){
+					document.getElementById('passConfirmError').innerHTML="*Password is not Matched";
+					return false;
+				}
+			}
+			function checkFormCompletion() {
+			        let form = document.forms['myForm'];
+			        let inputs = form.querySelectorAll("input[type='text'], input[type='password']");
+			        let checkbox = document.getElementById('terms');
+			        let allFilled = true;
+
+			        inputs.forEach(input => {
+			            if (!input.value.trim()) {
+			                allFilled = false;
+			            }
+			        });
+
+			        if (!checkbox.checked) {
+			            allFilled = false;
+			        }
+
+			        let registerButton = document.getElementById('btn');
+			        registerButton.style.opacity = allFilled ? "1" : "0.6";
+			    }
+
+			    document.addEventListener("DOMContentLoaded", function () {
+			        let form = document.forms['myForm'];
+			        let inputs = form.querySelectorAll("input[type='text'], input[type='password']");
+			        let checkbox = document.getElementById('terms');
+			        let registerButton = document.getElementById('btn');
+
+			        inputs.forEach(input => {
+			            input.addEventListener("input", checkFormCompletion);
+			        });
+
+			        checkbox.addEventListener("change", checkFormCompletion);
+			    });
+    </script>
+</body>
+</html>

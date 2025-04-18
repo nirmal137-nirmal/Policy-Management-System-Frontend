@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+			position: relative;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+			margin-top: 10px;
+        }
+        input {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        p {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+			.back-button {
+					 position: absolute;
+					 top: 30px;
+					 left:38px;
+					 background: none;
+					 border: none;
+					 font-size: 35px;
+					 cursor: pointer;
+					 color: #007bff;
+					 transition: 0.3s;
+		}
+
+		.back-button:hover {
+					 color: #0056b3;
+					 transform: scale(1.1);
+		}
+    </style>
+	<script>
+
+		function goBack() {
+			           window.history.back();
+			       }
+	</script>
+</head>
+<body>
+    <div class="login-container">
+
+		<span class="back-button" onclick="goBack()">←</span>
+        <h2>Admin Login</h2>
+
+        <form th:action="@{/loginAdmin}" th:object="${admin}" method="post">
+            <input type="text" name="email" placeholder="Enter Email" th:field="*{email}" required>
+            <input type="password" name="password" placeholder="Enter Password" th:field="*{password}" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <p th:if="${error}" class="error">[[${error}]]</p>
+    </div>
+</body>
+</html>
